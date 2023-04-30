@@ -7,9 +7,8 @@ import matplotlib.pyplot as plot
 # Load original dataset
 F_data = pandas.read_csv('data.csv',usecols=["F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12","F13","F14","F15"])
 
-# You must normalize the data before applying the fit method
-F_Normalized = F_data
 # Normalize the data in column manners
+F_Normalized = F_data
 for column in F_data.columns:
     F_Normalized[column] = F_Normalized[column]  / F_Normalized[column].abs().max()
 print("Normalized Data Below:")
