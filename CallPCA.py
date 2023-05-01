@@ -1,7 +1,7 @@
 import pandas
 from sklearn.decomposition import PCA
-import numpy
-import matplotlib.pyplot as plot
+import numpy as np
+import matplotlib.pyplot as plt
 # Reconfirm that python 3.8.8 is the correct version.
 
 # Load original dataset
@@ -11,21 +11,22 @@ F_data = pandas.read_csv('data.csv',usecols=["F1","F2","F3","F4","F5","F6","F7",
 F_Normalized = F_data
 for column in F_data.columns:
     F_Normalized[column] = F_Normalized[column]  / F_Normalized[column].abs().max()
+# Print normalized data
 print("Normalized Data Below:")
 print(F_Normalized)
 
-
-pca = PCA(n_components=F_data.shape[1])
-pca.fit(F_Normalized)
+# Apply PCA
+pc_num = 2
+PC_project = PCA(n_components=pc_num)
+PC_project.fit(F_Normalized)
+print(PC_project.explained_variance_ratio_)
 
 # Reformat
-loadings = pandas.DataFrame(pca.components_.T,
-columns=['PC%s' % _ for _ in range(len(F_Normalized.columns))],
-index=F_data.columns)
-print(loadings)
+print("components are:")
+print(PC_project.components_.T)
 
 # View results
-plot.plot(pca.explained_variance_ratio_)
-plot.ylabel('Explained Variance')
-plot.xlabel('Components')
-plot.show()
+plt.plot(PC_project.explained_variance_ratio_, marker='o')
+plt.ylabel('Explained Variance')
+plt.xlabel('Components')
+plt.show()
